@@ -108,6 +108,16 @@ UIAlertViewDelegate>
                                       cancelButtonTitle:@"OK"
                                       otherButtonTitles:nil]
                      show];
+                     // Add a data point to analytics recording user location and day of week
+                    NSDate *date = [NSDate date];
+                    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+                    [dateFormatter setDateFormat:@"EEEE"];
+                    NSDictionary *dimensions = @{
+                                                 @"country": [PFUser currentUser][@"country" ],
+                                                 @"dayOfWeek": [dateFormatter stringFromDate:date]
+                                                 };
+                    // Send the dimensions to Parse along with the 'pushResponse' event
+                    [PFAnalytics trackEvent:@"pushResponse" dimensions:dimensions];
                 }
             }];
         }
