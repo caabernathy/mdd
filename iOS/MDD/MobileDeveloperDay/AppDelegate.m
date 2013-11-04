@@ -40,6 +40,12 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     [FBAppCall handleDidBecomeActive];
+    PFUser *user = [PFUser currentUser];
+    if (user){
+        NSDate *date = [NSDate date];
+        user[@"lastActive"]= date;
+        [user saveInBackground];
+    }
 }
 
 // 1. TO-DO Initial Setup
