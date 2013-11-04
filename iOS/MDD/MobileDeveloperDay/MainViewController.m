@@ -103,6 +103,10 @@
                 //self.profilePictureView.profileID = user[@"id"];
             }
             
+            if (user[@"locale"]) {
+                [PFUser currentUser][@"country"] = user[@"locale"];
+            }
+            
             [[PFUser currentUser] saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                 [self dismissViewControllerAnimated:YES completion:nil];
             }];
