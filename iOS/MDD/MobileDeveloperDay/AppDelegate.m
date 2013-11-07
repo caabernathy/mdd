@@ -8,7 +8,7 @@
 #pragma mark - UIApplicationDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // 1. TO-DO Initial Setup
+    // DEMO-STEP 1: Initial Setup
     [Parse setApplicationId:@"PARSE_APPLICATION_ID" clientKey:@"PARSE_CLIENT_KEY"];
     [PFFacebookUtils initializeFacebook];
     PFACL *defaultACL = [PFACL ACL];
@@ -30,16 +30,18 @@
     return YES;
 }
 
-// 1. TO-DO Initial Setup
+// DEMO-STEP 2: Add User Management
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url
     sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
     return [PFFacebookUtils handleOpenURL:url];
 } 
 
-// 1. TO-DO Initial Setup
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
+    // DEMO-STEP 2: Add User Management
     [FBAppCall handleDidBecomeActive];
+    
+    // DEMO-STEP x: Email re-engagement
     PFUser *user = [PFUser currentUser];
     if (user){
         NSDate *date = [NSDate date];
@@ -48,9 +50,9 @@
     }
 }
 
-// 1. TO-DO Initial Setup
 - (void)applicationWillTerminate:(UIApplication *)application
 {
+    // DEMO-STEP 2: Add User Management
     [FBSession.activeSession close];
 }
 

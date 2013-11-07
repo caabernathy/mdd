@@ -23,7 +23,7 @@
 		09ABC08B13A1D52E009C3FCF /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 09ABC08913A1D52E009C3FCF /* MainViewController.xib */; };
 		09BEF34C13D51C3F001BBCDB /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09BEF34B13D51C3F001BBCDB /* Security.framework */; };
 		2FCDD6B014A573F500295AAC /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FCDD6AF14A573F500295AAC /* QuartzCore.framework */; };
-		30DAFCB518201061000893D9 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30DAFCB418201061000893D9 /* FacebookSDK.framework */; };
+		30268986182C3B5100413190 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30268985182C3B5100413190 /* FacebookSDK.framework */; };
 		30DAFCF918202B12000893D9 /* VoteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30DAFCF818202B12000893D9 /* VoteViewController.m */; };
 		30DAFCFD18202B48000893D9 /* AddEntryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30DAFCFB18202B48000893D9 /* AddEntryViewController.m */; };
 		30DAFCFE18202B48000893D9 /* AddEntryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 30DAFCFC18202B48000893D9 /* AddEntryViewController.xib */; };
@@ -60,7 +60,7 @@
 		09ABC08A13A1D52E009C3FCF /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainViewController.xib; sourceTree = "<group>"; };
 		09BEF34B13D51C3F001BBCDB /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		2FCDD6AF14A573F500295AAC /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		30DAFCB418201061000893D9 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../../../../../../../Documents/FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
+		30268985182C3B5100413190 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../../../../../../Documents/FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
 		30DAFCF718202B12000893D9 /* VoteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VoteViewController.h; sourceTree = "<group>"; };
 		30DAFCF818202B12000893D9 /* VoteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VoteViewController.m; sourceTree = "<group>"; };
 		30DAFCFA18202B48000893D9 /* AddEntryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddEntryViewController.h; sourceTree = "<group>"; };
@@ -102,7 +102,7 @@
 				09ABC07213A1D52D009C3FCF /* UIKit.framework in Frameworks */,
 				09ABC07413A1D52D009C3FCF /* Foundation.framework in Frameworks */,
 				094ACA0014367ACD008398F8 /* Parse.framework in Frameworks */,
-				30DAFCB518201061000893D9 /* FacebookSDK.framework in Frameworks */,
+				30268986182C3B5100413190 /* FacebookSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -129,7 +129,7 @@
 		09ABC07013A1D52D009C3FCF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				30DAFCB418201061000893D9 /* FacebookSDK.framework */,
+				30268985182C3B5100413190 /* FacebookSDK.framework */,
 				6372FF571613CC47002132AF /* AdSupport.framework */,
 				6372FF551613CC42002132AF /* Social.framework */,
 				6372FF521613CC3C002132AF /* Accounts.framework */,
@@ -322,6 +322,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE = "8052E977-1DAE-4719-94E9-3F43D2169715";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -347,6 +348,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PROVISIONING_PROFILE = "8052E977-1DAE-4719-94E9-3F43D2169715";
 				SDKROOT = iphoneos;
 			};
 			name = Release;

@@ -6,6 +6,8 @@
 //
 //
 
+// DEMO-STEP 5: View contest entry info
+
 #import <Parse/Parse.h>
 
 @interface VoteViewController : PFQueryTableViewController

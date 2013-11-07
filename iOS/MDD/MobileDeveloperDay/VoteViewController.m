@@ -6,6 +6,8 @@
 //
 //
 
+// DEMO-STEP 5: View contest entry info
+
 #import "VoteViewController.h"
 
 @interface VoteViewController () <UIAlertViewDelegate>
@@ -53,9 +55,10 @@
 
 - (PFQuery *)queryForTable {
     PFQuery *query = [PFQuery queryWithClassName:self.parseClassName];
+    [query includeKey:@"enteredBy"];
     [query whereKey:@"contest" equalTo:self.selectedContest];
     
-    // Can't vote for oneself?
+    // Cheat mode off: don't allow user to vote for themselves
     //[query whereKey:@"enteredBy" notEqualTo:[PFUser currentUser]];
     
     // If no objects are loaded in memory, we look to the cache first to fill the table
@@ -84,9 +87,7 @@
     
     // Configure the cell to show entry info
     PFUser *enteredBy = object[@"enteredBy"];
-    [enteredBy fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
-        cell.textLabel.text = enteredBy[@"displayName"];
-    }];
+    cell.textLabel.text = enteredBy[@"displayName"];
     
     PFFile *thumbnail = object[@"image"];
     cell.imageView.file = thumbnail;

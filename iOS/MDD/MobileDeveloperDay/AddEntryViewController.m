@@ -23,6 +23,7 @@ UIAlertViewDelegate>
 
 @implementation AddEntryViewController
 
+// DEMO-STEP 4: Add contest entry
 - (id)initWithContest:(PFObject *)contest {
     self = [self initWithNibName:@"AddEntryViewController" bundle:nil];
     if (self) {
@@ -65,6 +66,8 @@ UIAlertViewDelegate>
 
 - (void) saveEntry
 {
+    // DEMO-STEP 4: Add contest entry
+    
     // Show progress info
     self.savingEntryView.hidden = NO;
     [self.progressView setProgress:0.0];
@@ -108,7 +111,9 @@ UIAlertViewDelegate>
                                       cancelButtonTitle:@"OK"
                                       otherButtonTitles:nil]
                      show];
-                     // Add a data point to analytics recording user location and day of week
+                    
+                    // DEMO-STEP y: Analytics
+                    // Add a data point to analytics recording user location and day of week
                     NSDate *date = [NSDate date];
                     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
                     [dateFormatter setDateFormat:@"EEEE"];
@@ -116,8 +121,8 @@ UIAlertViewDelegate>
                                                  @"country": [PFUser currentUser][@"country" ],
                                                  @"dayOfWeek": [dateFormatter stringFromDate:date]
                                                  };
-                    // Send the dimensions to Parse along with the 'pushResponse' event
-                    [PFAnalytics trackEvent:@"pushResponse" dimensions:dimensions];
+                    // Send the dimensions to Parse along with the 'contestResponse' event
+                    [PFAnalytics trackEvent:@"contestResponse" dimensions:dimensions];
                 }
             }];
         }

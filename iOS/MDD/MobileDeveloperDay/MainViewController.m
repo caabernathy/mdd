@@ -3,12 +3,16 @@
 #import "AddEntryViewController.h"
 #import "VoteViewController.h"
 
-// 2. TO-DO: Add PFLoginViewController
+// DEMO-STEP 2: Add User Management
 @interface MainViewController ()
 <PFLogInViewControllerDelegate>
 
+// DEMO-STEP 2: Add User Management
 @property (strong, nonatomic) PFLogInViewController *loginViewController;
+
+// DEMO-STEP 3: Query contest data
 @property (strong, nonatomic) PFObject *currentContest;
+
 @property (weak, nonatomic) IBOutlet UILabel *contestDetails;
 
 @end
@@ -21,7 +25,7 @@
     if (self) {
         // Custom initialization
         
-        // 2. TO-DO: Add PFLoginViewController
+        // DEMO-STEP 2: Add User Management
         // Create login view controller
         self.loginViewController = [[PFLogInViewController alloc] init];
         [self.loginViewController setDelegate:self];
@@ -29,8 +33,8 @@
          //PFLogInFieldsUsernameAndPassword |
          //PFLogInFieldsLogInButton |
          //PFLogInFieldsSignUpButton |
+         //PFLogInFieldsTwitter |
          PFLogInFieldsFacebook
-         //PFLogInFieldsTwitter
          ];
         [self.loginViewController setFacebookPermissions:@[@"email"]];
     }
@@ -58,6 +62,7 @@
     [self setTitle:@"Photo Contest"];
 }
 
+// DEMO-STEP 3: Query contest data
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
@@ -66,7 +71,7 @@
     [self readContestData];
 }
 
-// 2. TO-DO: Add PFLoginViewController
+// DEMO-STEP 2: Add User Management
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
@@ -83,7 +88,7 @@
     }
 }
 
-// 2. TO-DO: Add PFLoginViewController
+// DEMO-STEP 2: Add User Management
 #pragma mark - PFLoginViewControllerDelegate
 -(void)logInViewController:(PFLogInViewController *)logInController didLogInUser:(PFUser *)user {    
     // user has logged in - we need to fetch all of their Facebook data before we let them in
@@ -95,18 +100,23 @@
     [FBRequestConnection startForMeWithCompletionHandler:^(FBRequestConnection *connection, id<FBGraphUser> user, NSError *error) {
         if (!error) {
             // Set user's information
+            // For contest entry display
             if (user[@"name"]) {
                 [PFUser currentUser][@"displayName"] = user[@"name"];
             }
+            // For optionally showing the user's profile view
             if (user.id && user.id != 0) {
                 [PFUser currentUser][@"facebookId"] = user[@"id"];
-                //self.profilePictureView.profileID = user[@"id"];
             }
-            
+            // For re-engagement
+            if (user[@"email"]) {
+                [PFUser currentUser][@"email"] = user[@"email"];
+            }
+            // For analytics
             if (user[@"locale"]) {
                 [PFUser currentUser][@"country"] = user[@"locale"];
             }
-            
+            // Save the user's info on Parse
             [[PFUser currentUser] saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                 [self dismissViewControllerAnimated:YES completion:nil];
             }];
@@ -116,7 +126,7 @@
     }];
 }
 
-// 3. TO-DO: Add contest entry
+// DEMO-STEP 3: Query contest data
 - (void) readContestData
 {
     // Load the challenges
@@ -133,20 +143,21 @@
     }];
 }
 
-// 3. TO-DO: Add contest entry
 - (IBAction)addEntryPressed:(id)sender {
+    // DEMO-STEP 4: Add contest entry
     AddEntryViewController *addEntryViewController = [[AddEntryViewController alloc]
                                   initWithContest:self.currentContest];
     [self.navigationController pushViewController:addEntryViewController animated:YES];
 }
 
-// 4. TO-DO: Add voting flow
 - (IBAction)votePressed:(id)sender {
+    // DEMO-STEP 5: View contest entry info
     VoteViewController *voteViewController = [[VoteViewController alloc]
                                                       initWithContest:self.currentContest];
     [self.navigationController pushViewController:voteViewController animated:YES];
 }
 
+// DEMO-STEP 2: Add User Management
 - (void) logout
 {
     [PFUser logOut];
