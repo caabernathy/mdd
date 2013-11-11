@@ -133,6 +133,7 @@
     PFQuery *query = [PFQuery queryWithClassName:@"Contest"];
     [query selectKeys:@[@"title"]];
     [query whereKey:@"active" equalTo:@YES];
+    [query orderByDescending:@"createdAt"];
     [query getFirstObjectInBackgroundWithBlock:^(PFObject *result, NSError *error) {
         if (error) {
             NSLog(@"Error: %@ %@", error, [error userInfo]);
@@ -144,6 +145,15 @@
 }
 
 - (IBAction)addEntryPressed:(id)sender {
+    if (nil == self.currentContest) {
+        [[[UIAlertView alloc] initWithTitle:@"Oops"
+                                    message:@"No currently active contests."
+                                   delegate:nil
+                          cancelButtonTitle:@"OK"
+                           otherButtonTitles:nil] show];
+        return;
+         
+    }
     // DEMO-STEP 4: Add contest entry
     AddEntryViewController *addEntryViewController = [[AddEntryViewController alloc]
                                   initWithContest:self.currentContest];
@@ -151,6 +161,15 @@
 }
 
 - (IBAction)votePressed:(id)sender {
+    if (nil == self.currentContest) {
+        [[[UIAlertView alloc] initWithTitle:@"Oops"
+                                    message:@"No currently active contests."
+                                   delegate:nil
+                          cancelButtonTitle:@"OK"
+                          otherButtonTitles:nil] show];
+        return;
+        
+    }
     // DEMO-STEP 5: View contest entry info
     VoteViewController *voteViewController = [[VoteViewController alloc]
                                                       initWithContest:self.currentContest];
