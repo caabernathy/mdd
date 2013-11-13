@@ -91,8 +91,9 @@
 // DEMO-STEP 2: Add User Management
 #pragma mark - PFLoginViewControllerDelegate
 -(void)logInViewController:(PFLogInViewController *)logInController didLogInUser:(PFUser *)user {    
+    BOOL newUser = [user isNew];
     // user has logged in - we need to fetch all of their Facebook data before we let them in
-    if (![user isNew]) {
+    if (!newUser) {
         [self dismissViewControllerAnimated:YES completion:nil];
     }
     
@@ -118,7 +119,10 @@
             }
             // Save the user's info on Parse
             [[PFUser currentUser] saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                [self dismissViewControllerAnimated:YES completion:nil];
+                // Can now let new users in.
+                if (newUser) {
+                    [self dismissViewControllerAnimated:YES completion:nil];
+                }
             }];
         } else {
             NSLog(@"Error getting user info");
