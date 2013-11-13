@@ -93,40 +93,38 @@ UIAlertViewDelegate>
             entry[@"contest"] = self.selectedContest;
             entry[@"enteredBy"] = [PFUser currentUser];
             entry[@"image"] = imageFile;
-            NSError *error = nil;
-            // Save the entry. Since we're running in the background
-            // we can call the synchronous save method.
-            [entry save:&error];
-            if (error) {
-                // Notify the user of the error
-                NSLog(@"Error saving new entry info: %@", error.localizedDescription);
-                [[[UIAlertView alloc] initWithTitle:@"Error"
-                                            message:@"Could not save data"
-                                           delegate:self
-                                  cancelButtonTitle:@"OK"
-                                  otherButtonTitles:nil]
-                 show];
-            } else {
-                // Notify the user of the success
-                [[[UIAlertView alloc] initWithTitle:@"Success"
-                                            message:@"Entry saved"
-                                           delegate:self
-                                  cancelButtonTitle:@"OK"
-                                  otherButtonTitles:nil]
-                 show];
-                
-                // DEMO-STEP y: Analytics
-                // Add a data point to analytics recording user location and day of week
-                NSDate *date = [NSDate date];
-                NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-                [dateFormatter setDateFormat:@"EEEE"];
-                NSDictionary *dimensions = @{
-                                             @"country": [PFUser currentUser][@"country" ],
-                                             @"dayOfWeek": [dateFormatter stringFromDate:date]
-                                             };
-                // Send the dimensions to Parse along with the 'contestResponse' event
-                [PFAnalytics trackEvent:@"contestResponse" dimensions:dimensions];
-            }
+            [entry saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                if (error) {
+                    // Notify the user of the error
+                    NSLog(@"Error saving new entry info: %@", error.localizedDescription);
+                    [[[UIAlertView alloc] initWithTitle:@"Error"
+                                                message:@"Could not save data"
+                                               delegate:self
+                                      cancelButtonTitle:@"OK"
+                                      otherButtonTitles:nil]
+                     show];
+                } else {
+                    // Notify the user of the success
+                    [[[UIAlertView alloc] initWithTitle:@"Success"
+                                                message:@"Entry saved"
+                                               delegate:self
+                                      cancelButtonTitle:@"OK"
+                                      otherButtonTitles:nil]
+                     show];
+                    
+                    // DEMO-STEP y: Analytics
+                    // Add a data point to analytics recording user location and day of week
+                    NSDate *date = [NSDate date];
+                    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+                    [dateFormatter setDateFormat:@"EEEE"];
+                    NSDictionary *dimensions = @{
+                                                 @"country": [PFUser currentUser][@"country" ],
+                                                 @"dayOfWeek": [dateFormatter stringFromDate:date]
+                                                 };
+                    // Send the dimensions to Parse along with the 'contestResponse' event
+                    [PFAnalytics trackEvent:@"contestResponse" dimensions:dimensions];
+                }
+            }];
         }
     } progressBlock:^(int percentDone) {
         // Update progress info
