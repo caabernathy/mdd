@@ -1,0 +1,43 @@
+// A job to contact 7-day inactive users and invite them to a contest
+Parse.Cloud.job("emailInactiveUsers", function(request, status) {
+ 
+  // Set up SendGrid
+  var SendGrid = require("sendgrid");
+  SendGrid.initialize("YOUR_ACCT_NAME", "YOUR_PASSWORD");
+ 
+  var query = new Parse.Query(Parse.User);
+ 
+  // Set up 7 day criteria
+  var d = new Date();
+  var d1 = new Date(d - 1000 * 60 * 60 * 24 * 7); // gets 7 days ago
+  var d2 = new Date(d - 1000 * 60 * 60 * 24 * 8); // gets 8 days ago
+  query.lessThan("lastActive", d1);
+  query.greaterThan("lastActive", d2);
+ 
+  query.each(function(user, response) {
+   
+    SendGrid.sendEmail({
+      to: user.getEmail(),
+      from: "hello@mobiledevday.com",
+      subject: "Hello from Mobile Dev Day!",
+      text: "We miss you! Please come back."
+    }, {
+    success: function(httpResponse) {
+      console.log(httpResponse);
+      response.success("Email successfully sent to "+ user.getUsername());
+    },
+    error: function(httpResponse) {
+      console.error(httpResponse);
+      response.error("Uh oh, something went wrong");
+    }
+    });
+ 
+  }).then(function() {
+    // Set the job's success status
+    status.success("Emailed all users successfully.");
+  }, function(error) {
+    // Set the job's error status
+    status.error("Uh oh, something went wrong.");
+  });
+ 
+});
